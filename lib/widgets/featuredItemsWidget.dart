@@ -17,10 +17,7 @@ class _FeaturedItemsWidgetState extends State<FeaturedItemsWidget> {
     final products = productsData.items;
 
     void favOnTap(int id) {
-      id--;
-      setState(() {
-        products[id].isFavourite = !products[id].isFavourite;
-      });
+      productsData.toggleFavorite(id);
     }
 
     return Container(
@@ -43,7 +40,7 @@ class _FeaturedItemsWidgetState extends State<FeaturedItemsWidget> {
           itemCount: products.length,
           itemBuilder: (ctx, i) => FeaturedListItem(
             id: products[i].id,
-            url: products[i].imageUrl,
+            url: products[i].imageUrl.values.toList()[0][0],
             title: products[i].title,
             price: products[i].price,
             isFavourite: products[i].isFavourite,

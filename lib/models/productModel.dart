@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 
 class Product {
-  final String imageUrl, title;
+  final String title;
+  final Map<String, List<String>> imageUrl;
+  final List<String> sizes;
   final int id, price, rating;
   bool isFavourite;
 
@@ -11,6 +14,7 @@ class Product {
     @required this.imageUrl,
     @required this.price,
     @required this.rating,
+    @required this.sizes,
     this.isFavourite = false,
   });
 }

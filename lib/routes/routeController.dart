@@ -58,9 +58,7 @@ class _RouteControllerState extends State<RouteController> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 85),
-                child: AppBarSearch(
-                  show: _index == 0 ? true : false,
-                ),
+                child: AppBarSearch(),
               )
             ],
           ),
