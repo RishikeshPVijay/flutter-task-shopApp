@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import './providers/catalogueProvider.dart';
 import './providers/productsProvider.dart';
 
 import './routes/productDetailsRoute.dart';
@@ -19,12 +20,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => Products(),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => CatalogueProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           fontFamily: 'Raleway',
           primarySwatch: Colors.blue,
+          accentColor: Colors.lime,
           canvasColor: Color(0xfff1f1f1),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),

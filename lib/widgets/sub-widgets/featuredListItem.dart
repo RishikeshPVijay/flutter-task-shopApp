@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../../routes/productDetailsRoute.dart';
 
 class FeaturedListItem extends StatelessWidget {
-  final int id;
+  final int id, price, discount;
   final String url;
   final bool isFavourite;
   final String title;
-  final int price;
   final favOnTap;
 
   FeaturedListItem({
     this.id,
+    this.discount,
     this.url,
     this.isFavourite,
     this.price,
@@ -92,6 +92,37 @@ class FeaturedListItem extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (discount != null)
+                  Positioned(
+                    top: 16.0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                        horizontal: 15.0,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15.0),
+                          bottomRight: Radius.circular(15.0),
+                        ),
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xffc24700),
+                            Color(0xffed892b),
+                          ],
+                        ),
+                      ),
+                      child: Text(
+                        '-$discount%',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             ),
             SizedBox(
@@ -115,15 +146,36 @@ class FeaturedListItem extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.only(left: 8),
-              child: Text(
-                'Rs.$price',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Roboto',
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: discount != null
+                          ? 'Rs.${(price - (price / 100) * discount).round()}  '
+                          : 'Rs.$price',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'Roboto',
+                        color:
+                            discount != null ? Color(0xffdb0f00) : Colors.black,
+                      ),
+                    ),
+                    if (discount != null)
+                      TextSpan(
+                        text: 'Rs.$price',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Roboto',
+                          color: Colors.grey,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                  ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

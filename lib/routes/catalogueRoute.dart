@@ -1,40 +1,98 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:task/providers/catalogueProvider.dart';
 
 class CatalogueRoute extends StatelessWidget {
-  final List<Map<String, String>> _items = [
-    {
-      'url':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKoUrMZcc09NDN78BKVMx60vgfakMBYc8pIg&usqp=CAU',
-      'title': 'Women\'s Fashion',
-    },
-    {
-      'url':
-          'https://img.theweek.in/content/dam/week/webworld/feature/lifestyle/2017/august/men-fashion.jpg',
-      'title': 'Men\'s Fashion',
-    },
-    {
-      'url':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrrcW7JJcagSFiUnoibkK5bKPXhoas5fqfrQ&usqp=CAU',
-      'title': 'Phones',
-    },
-    {
-      'url': 'https://cdn.mos.cms.futurecdn.net/mnzNfoMcmVXme8vxENcyjm.jpg',
-      'title': 'Computer Accessories',
-    },
-    {
-      'url':
-          'https://blog.hubspot.com/hs-fs/hubfs/The%2013%20Best%20Smart%20Home%20Devices%20%26%20Systems%20of%202019-5.png?width=435&name=The%2013%20Best%20Smart%20Home%20Devices%20%26%20Systems%20of%202019-5.png',
-      'title': 'Smart Home',
-    },
-    {
-      'url':
-          'https://cdn.whatmomslove.com/wp-content/uploads/2019/02/FEATURED-IMAGE-Spring-Crafts.png',
-      'title': 'Arts & Crafts',
-    }
-  ];
+  Text buildText(String str) {
+    return Text(
+      str,
+      style: TextStyle(
+        color: Color(0xff666666),
+        fontWeight: FontWeight.w500,
+        fontSize: 16,
+      ),
+    );
+  }
+
+  void showModal(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15.0),
+          topRight: Radius.circular(15.0),
+        ),
+      ),
+      context: context,
+      builder: (ctx) => Container(
+        height: 80 + (9 * 30.0),
+        padding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 15.0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 5,
+                  width: MediaQuery.of(context).size.width * 0.16,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    color: Colors.grey[350],
+                  ),
+                  alignment: Alignment.center,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Women\'s Fashion',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Roboto',
+                    fontSize: 22,
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  buildText('Clothing'),
+                  buildText('Shops'),
+                  buildText('Jewelry'),
+                  buildText('Watches'),
+                  buildText('Handbags'),
+                  buildText('Accessories'),
+                  buildText('Mens\'s Fashion'),
+                  buildText('Girl\'s Fashion'),
+                  buildText('Boy\'s Fashion'),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final catalogueData = Provider.of<CatalogueProvider>(context);
+    final _items = catalogueData.items;
+
     return Container(
       child: ListView.builder(
         itemCount: _items.length,
@@ -43,36 +101,41 @@ class CatalogueRoute extends StatelessWidget {
             vertical: 8,
             horizontal: 15,
           ),
-          child: Container(
-            height: 90,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    _items[i]['title'],
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 17,
+          child: InkWell(
+            onTap: () {
+              showModal(context);
+            },
+            child: Container(
+              height: 90,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      _items[i]['title'],
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  height: 90,
-                  width: 90,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(4.0),
-                      topRight: Radius.circular(4.0),
-                    ),
-                    child: Image.network(
-                      _items[i]['url'],
-                      fit: BoxFit.cover,
+                  Container(
+                    height: 90,
+                    width: 90,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(4.0),
+                        topRight: Radius.circular(4.0),
+                      ),
+                      child: Image.network(
+                        _items[i]['url'],
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

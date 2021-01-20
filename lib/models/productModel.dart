@@ -5,7 +5,7 @@ class Product {
   final String title;
   final Map<String, List<String>> imageUrl;
   final List<String> sizes;
-  final int id, price, rating;
+  final int id, price, rating, discount;
   bool isFavourite;
 
   Product({
@@ -15,6 +15,7 @@ class Product {
     @required this.price,
     @required this.rating,
     @required this.sizes,
+    this.discount,
     this.isFavourite = false,
   });
 }

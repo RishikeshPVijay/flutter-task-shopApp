@@ -21,6 +21,7 @@ class Products with ChangeNotifier {
       },
       title: 'Girls Maxi/Full Length Party Dress',
       price: 1750,
+      discount: 50,
       sizes: [
         'XXS',
         'XS',

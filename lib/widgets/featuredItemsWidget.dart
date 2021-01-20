@@ -44,6 +44,7 @@ class _FeaturedItemsWidgetState extends State<FeaturedItemsWidget> {
             title: products[i].title,
             price: products[i].price,
             isFavourite: products[i].isFavourite,
+            discount: products[i].discount,
             favOnTap: favOnTap,
           ),
         ),

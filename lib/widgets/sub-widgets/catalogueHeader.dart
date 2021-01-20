@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task/routes/catalogueRoute.dart';
 
 class CatalogueHeader extends StatelessWidget {
   @override
@@ -17,30 +18,26 @@ class CatalogueHeader extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              child: GestureDetector(
-                onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      'See All',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Icon(
-                      Icons.chevron_right,
-                      size: 20,
-                      color: Colors.grey,
-                    ),
-                  ],
+          InkWell(
+            onTap: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                  'See All',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
+                Icon(
+                  Icons.chevron_right,
+                  size: 20,
+                  color: Colors.grey,
+                ),
+              ],
             ),
           ),
         ],

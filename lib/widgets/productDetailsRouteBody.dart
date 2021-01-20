@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/carousel/gf_carousel.dart';
 
+import './sub-widgets/ProductDetailsColorsListWidget.dart';
+import './sub-widgets/ProductDetailsPriceWidget.dart';
+import './sub-widgets/ProductDetailsSizeListWidget.dart';
+import './sub-widgets/ProductDetailsReviewRowWidget.dart';
+import './sub-widgets/productDetailsImageSliderWidget.dart';
 import '../models/productModel.dart';
 
 class ProductDetailsRouteBody extends StatefulWidget {
@@ -41,67 +45,17 @@ class _ProductDetailsRouteBodyState extends State<ProductDetailsRouteBody> {
       margin: const EdgeInsets.only(bottom: 5.0),
       child: Column(
         children: <Widget>[
-          GFCarousel(
-            height: 350,
-            viewportFraction: 1.0,
-            pagination: true,
-            pagerSize: 8,
-            autoPlay: false,
-            initialPage: 0,
-            enableInfiniteScroll: false,
-            items: widget.product.imageUrl[_colors[_selectedColorIndex]]
-                .map(
-                  (e) => Container(
-                    child: Image.network(
-                      e,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                )
-                .toList(),
+          ProductDetailsImageSliderWidget(
+            product: widget.product,
+            colors: _colors,
+            selectedColorIndex: _selectedColorIndex,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          ratingIcons(),
-                          ratingIcons(),
-                          ratingIcons(),
-                          ratingIcons(),
-                          ratingIcons(),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Text(
-                        '8 reviews',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'In Stock',
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                ProductDetailsReviewRowWidget(),
                 SizedBox(
                   height: 10,
                 ),
@@ -119,16 +73,7 @@ class _ProductDetailsRouteBodyState extends State<ProductDetailsRouteBody> {
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  child: Text(
-                    'Rs.${widget.product.price}',
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+                ProductDetailsPriceWidget(product: widget.product),
                 SizedBox(
                   height: 20,
                 ),
@@ -154,37 +99,13 @@ class _ProductDetailsRouteBodyState extends State<ProductDetailsRouteBody> {
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: widget.product.imageUrl.length,
-                          itemBuilder: (ctx, i) => Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                _selectColor(i);
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(14.0),
-                                  border: Border.all(
-                                    color: _selectedColorIndex == i
-                                        ? Color(0xffdfb156)
-                                        : Colors.transparent,
-                                    width: 2.5,
-                                  ),
-                                ),
-                                width: 57,
-                                child: Tooltip(
-                                  message: _colors[i],
-                                  preferBelow: false,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(12.0),
-                                    child: Image.network(
-                                      widget.product.imageUrl[_colors[i]][0],
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                          itemBuilder: (ctx, i) =>
+                              ProductDetailsColorsListWidget(
+                            colors: _colors,
+                            i: i,
+                            product: widget.product,
+                            selectColor: _selectColor,
+                            selectedColorIndex: _selectedColorIndex,
                           ),
                         ),
                       ),
@@ -216,33 +137,20 @@ class _ProductDetailsRouteBodyState extends State<ProductDetailsRouteBody> {
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: widget.product.sizes.length,
-                          itemBuilder: (ctx, i) => GestureDetector(
-                            onTap: () {
-                              _selectSize(i);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  border: Border.all(
-                                    color: _selectedSizeIndex == i
-                                        ? Color(0xffdfb156)
-                                        : Colors.grey,
-                                    width: _selectedSizeIndex == i ? 1.5 : 1.0,
-                                  ),
-                                ),
-                                width: 57,
-                                child: Center(
-                                  child: Text(widget.product.sizes[i]),
-                                ),
-                              ),
-                            ),
+                          itemBuilder: (ctx, i) => ProductDetailsSizeListWidget(
+                            colors: _colors,
+                            i: i,
+                            product: widget.product,
+                            selectSize: _selectSize,
+                            selectedSizeIndex: _selectedSizeIndex,
                           ),
                         ),
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 10,
                 ),
               ],
             ),
@@ -251,12 +159,4 @@ class _ProductDetailsRouteBodyState extends State<ProductDetailsRouteBody> {
       ),
     );
   }
-}
-
-Widget ratingIcons() {
-  return Icon(
-    Icons.star,
-    size: 19,
-    color: Color(0xffdfb156),
-  );
 }
