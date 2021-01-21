@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:task/widgets/appBarSearch.dart';
-import 'package:task/widgets/appBarWidget.dart';
 
+import '../widgets/appBarSearch.dart';
+import '../widgets/appBarWidget.dart';
+import '../widgets/drawerWidget.dart';
 import './catalogueRoute.dart';
 import './favouriteRoute.dart';
 import './homeRoute.dart';
@@ -76,14 +77,7 @@ class _RouteControllerState extends State<RouteController> {
         ],
         onPageChanged: (index) => _pageChanged(index),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: <Widget>[
-            Text('data'),
-            Text('data'),
-          ],
-        ),
-      ),
+      drawer: DrawerWidget(),
       bottomNavigationBar: BottomNavWidget(_index, _jumpToPage),
     );
   }

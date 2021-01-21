@@ -35,37 +35,38 @@ class _ImageSliderWidgetState extends State<ImageSliderWidget> {
         borderRadius: BorderRadius.circular(15),
         child: Stack(
           children: <Widget>[
-            GFCarousel(
-              enableInfiniteScroll: true,
-              autoPlay: true,
-              autoPlayInterval: Duration(seconds: 5),
-              autoPlayAnimationDuration: Duration(milliseconds: 1200),
-              autoPlayCurve: Curves.easeInOut,
-              viewportFraction: 1.0,
-              height: 90,
-              items: imageList
-                  .map(
-                    (e) => Container(
-                      child: Image.network(e, fit: BoxFit.fill, width: 1000.0),
-                    ),
-                  )
-                  .toList(),
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPos = index;
-                  anWidth = 50;
-                });
-              },
-            ),
-            Container(
-              color: Color.fromRGBO(0, 0, 0, 0.3),
-              height: 90,
-              width: width,
+            ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                Colors.black38,
+                BlendMode.overlay,
+              ),
+              child: GFCarousel(
+                enableInfiniteScroll: true,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 5),
+                autoPlayAnimationDuration: Duration(milliseconds: 1200),
+                autoPlayCurve: Curves.easeInOut,
+                viewportFraction: 1.0,
+                height: 90,
+                items: imageList
+                    .map(
+                      (e) => Container(
+                        child:
+                            Image.network(e, fit: BoxFit.fill, width: 1000.0),
+                      ),
+                    )
+                    .toList(),
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPos = index;
+                    anWidth = paginatorWidth;
+                  });
+                },
+              ),
             ),
             Positioned(
               bottom: 8,
               child: Container(
-                // color: Colors.red,
                 height: 10,
                 width: width,
                 child: Row(
@@ -98,34 +99,6 @@ class _ImageSliderWidgetState extends State<ImageSliderWidget> {
                       ],
                     );
                   }).toList(),
-                  // Expanded(
-                  //   child: Container(
-                  //     margin: const EdgeInsets.symmetric(horizontal: 5),
-                  //     color: Colors.grey[200],
-                  //     height: 3,
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: Container(
-                  //     margin: const EdgeInsets.symmetric(horizontal: 5),
-                  //     color: Colors.grey[200],
-                  //     height: 3,
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: Container(
-                  //     margin: const EdgeInsets.symmetric(horizontal: 5),
-                  //     color: Colors.grey[200],
-                  //     height: 3,
-                  //   ),
-                  // ),
-                  // Expanded(
-                  //   child: Container(
-                  //     margin: const EdgeInsets.symmetric(horizontal: 5),
-                  //     color: Colors.grey[200],
-                  //     height: 3,
-                  //   ),
-                  // ),
                 ),
               ),
             )
